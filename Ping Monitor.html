@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Ping via exec()</title>
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+    </head>
+<body>
+<?php
+
+/**
+* Ping via exec()
+*
+*@param $host
+*@return bool
+*/
+function ping($host)
+{
+    exec(sprintf('ping -c -W 5 %s', escapeshellarg($host)), $res, $rval)
+    return $rval ===0;
+}
+
+/* check if the host is up. $host can also be an ip address */
+$host = 'WEBSITE';
+$up = ping($host);
+
+/* optionally display status */
+$faClass = ($up) ? 'fa-check-square-o': 'fa-square-o';
+echo sprintf('<i class="fa %s"></i> %s', $faClass, $host);
+
+?>
+</body>
+</html>
